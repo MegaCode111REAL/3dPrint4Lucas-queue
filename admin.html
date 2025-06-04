@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - 3dPrint4Lucas</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1>Admin Panel</h1>
+    <ul id="fileList">Loading...</ul>
+  </div>
+  <script>
+    async function fetchFiles() {
+      const res = await fetch("https://api.github.com/repos/MegaCode111REAL/3dPrint4Lucas-queue/contents/uploads");
+      const files = await res.json();
+      const fileList = document.getElementById("fileList");
+      fileList.innerHTML = "";
+
+      files.forEach(file => {
+        if (!file.name.endsWith(".json")) {
+          const li = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = file.download_url;
+          link.innerText = file.name;
+          link.download = file.name;
+          li.appendChild(link);
+          fileList.appendChild(li);
+        }
+      });
+    }
+
+    fetchFiles();
+  </script>
+</body>
+</html>
