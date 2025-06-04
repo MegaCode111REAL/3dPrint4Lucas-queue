@@ -39,17 +39,19 @@
       status.innerText = "Uploading...";
 
       const response = await fetch("https://3dprint4lucas.jsut4392.workers.dev", {
-        method: "POST",
-        body: formData
-      });
+  method: "POST",
+  body: formData
+});
 
-      if (response.ok) {
-        status.innerText = "Uploaded successfully!";
-        fileInput.value = "";
-        nameInput.value = "";
-      } else {
-        status.innerText = "Failed to upload.";
-      }
+if (response.ok) {
+  status.innerText = "Uploaded successfully!";
+  fileInput.value = "";
+  nameInput.value = "";
+} else {
+  const errorText = await response.text();
+  status.innerText = "Failed to upload: " + errorText;
+}
+
     }
   </script>
 </body>
