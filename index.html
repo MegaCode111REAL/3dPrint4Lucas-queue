@@ -2,60 +2,62 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <title>3dPrint4Lucas Upload</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>3dPrint4Lucas</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="topbar">3dPrint4Lucas</div>
   <div class="main-content">
-  <div class="card upload-card">
-    <h1>3dPrint4Lucas</h1>
-    <div class="form-group">
-      <label for="nameInput">Your Name</label>
-      <input type="text" id="nameInput" placeholder="e.g. Jonah" />
+    <!-- Upload Form -->
+    <div class="card">
+      <h1>Upload File</h1>
+      <div class="form-group">
+        <input type="file" id="fileInput" />
+      </div>
+      <button onclick="uploadFile()">Send to Lucas</button>
+      <div class="status-text" id="statusText"></div>
     </div>
-    <div class="form-group">
-      <label for="fileInput">Choose File</label>
-      <input type="file" id="fileInput" />
+
+    <!-- Thingiverse Preview -->
+    <div class="card iframe-card">
+      <h1>Thingiverse</h1>
+      <iframe src="https://www.thingiverse.com/" title="Thingiverse preview"></iframe>
     </div>
-    <button onclick="uploadFile()">Send</button>
-    <p id="status" class="status-text"></p>
   </div>
 
   <script>
     async function uploadFile() {
-      const fileInput = document.getElementById("fileInput");
-      const nameInput = document.getElementById("nameInput");
-      const status = document.getElementById("status");
+      const input = document.getElementById("fileInput");
+      const statusText = document.getElementById("statusText");
 
-      if (!fileInput.files.length || !nameInput.value) {
-        status.innerText = "Please fill in all fields.";
+      if (input.files.length === 0) {
+        statusText.textContent = "Please select a file.";
         return;
       }
 
+      const file = input.files[0];
       const formData = new FormData();
-      formData.append("file", fileInput.files[0]);
-      formData.append("name", nameInput.value);
+      formData.append("file", file);
 
-      status.innerText = "Uploading...";
+      statusText.textContent = "Uploading...";
 
       try {
-        const response = await fetch("https://3dprint4lucas.jsut4392.workers.dev", {
+        const res = await fetch("https://3dprint4lucas.jsut4392.workers.dev", {
           method: "POST",
           body: formData
         });
 
-        if (response.ok) {
-          status.innerText = "Uploaded successfully!";
-          fileInput.value = "";
-          nameInput.value = "";
+        const text = await res.text();
+        if (res.ok) {
+          statusText.textContent = "Uploaded successfully!";
+          input.value = "";
         } else {
-          const errorText = await response.text();
-          status.innerText = "Failed to upload: " + errorText;
+          throw new Error("Upload failed:\n" + text);
         }
       } catch (err) {
-        status.innerText = "Error: " + err.message;
+        statusText.textContent = "Failed to upload: " + err.message;
+        console.error(err);
       }
     }
   </script>
