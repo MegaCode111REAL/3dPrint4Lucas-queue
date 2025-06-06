@@ -1,6 +1,8 @@
+/* Base light mode styles */
 body {
   font-family: sans-serif;
   background: #f9f9f9;
+  color: #000;
   margin: 0;
   padding: 0;
 }
@@ -12,8 +14,9 @@ body {
   font-size: 24px;
   font-weight: bold;
   text-align: center;
-  border-bottom: 20px solid black;
-  border-radius: 0 0 20px 20px;
+  border: 10px solid black;
+  border-radius: 0 0 16px 16px;
+  margin-bottom: 40px;
 }
 
 .main-content {
@@ -25,12 +28,11 @@ body {
   box-sizing: border-box;
 }
 
-/* Card-style container (for upload, iframe, highlight, grid) */
 .card,
 .highlight-box,
 .grid-item {
   background: white;
-  border: 20px solid black;
+  border: 10px solid black;
   border-radius: 20px;
   padding: 24px;
   width: 100%;
@@ -44,15 +46,17 @@ input[type="text"] {
   width: 100%;
   padding: 8px;
   margin-top: 4px;
-  border: 4px solid black;
-  border-radius: 12px;
+  border: 3px solid black;
+  border-radius: 10px;
   box-sizing: border-box;
+  background: white;
+  color: black;
 }
 
 button {
   background: white;
   color: black;
-  border: 20px solid black;
+  border: 10px solid black;
   border-radius: 16px;
   padding: 12px;
   font-size: 16px;
@@ -69,18 +73,16 @@ button:hover {
 .status-text {
   margin-top: 12px;
   font-size: 14px;
-  color: #000;
 }
 
 .iframe-card iframe {
   width: 100%;
   height: 450px;
-  border: 20px solid black;
+  border: 10px solid black;
   border-radius: 20px;
   box-sizing: border-box;
 }
 
-/* Admin Layout specifics */
 .admin-layout {
   flex-direction: column;
   align-items: center;
@@ -98,12 +100,52 @@ button:hover {
   font-weight: bold;
   font-size: 18px;
   margin-bottom: 8px;
-  color: black;
 }
 
 .file-name {
   font-size: 16px;
   margin-bottom: 10px;
-  color: black;
   word-break: break-word;
+}
+
+/* 🌙 Dark Mode Overrides */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #111;
+    color: white;
+  }
+
+  .topbar {
+    background-color: #222;
+    color: white;
+    border-color: white;
+  }
+
+  .card,
+  .highlight-box,
+  .grid-item {
+    background: #1e1e1e;
+    border-color: white;
+  }
+
+  input[type="file"],
+  input[type="text"] {
+    background: #333;
+    color: white;
+    border-color: white;
+  }
+
+  button {
+    background: #222;
+    color: white;
+    border-color: white;
+  }
+
+  button:hover {
+    background: #444;
+  }
+
+  .iframe-card iframe {
+    border-color: white;
+  }
 }
