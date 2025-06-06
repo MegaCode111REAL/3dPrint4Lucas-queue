@@ -1,80 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Panel – 3dPrint4Lucas</title>
-  <link rel="stylesheet" href="style.css" />
+<title>come on bruh.</title>
 </head>
 <body>
-  <script>
-  const correctPassword = "lucasprint"; // Choose your own
 
-  if (!sessionStorage.getItem("adminLoggedIn")) {
-    const pass = prompt("Admin password:");
-    if (pass !== correctPassword) {
-      document.body.innerHTML = "<h2>Access denied.</h2>";
-      throw new Error("Access denied");
-    }
-    sessionStorage.setItem("adminLoggedIn", "true");
-  }
-</script>
-  <div class="topbar">3dPrint4Lucas</div>
-  <div class="admin-layout">
-    <div id="first-file" class="highlight-box">
-      <div class="file-number">#1</div>
-      <div class="file-name">Loading...</div>
-      <a class="file-link" href="#" download>
-        <button>Download</button>
-      </a>
-    </div>
+<h1>Bruh.</h1>
+<p>U really thought that would work?.</p>
 
-    <div class="grid" id="file-grid">
-      <!-- More files appear here -->
-    </div>
-  </div>
-
-  <script>
-    async function loadFiles() {
-      try {
-        const response = await fetch('https://3dprint4lucas.jsut4392.workers.dev/files');
-        if (!response.ok) throw new Error("Failed to fetch files");
-
-        const files = await response.json();
-
-        if (!files.length) {
-          document.querySelector('.file-name').innerText = "No files uploaded.";
-          document.querySelector('.file-link').style.display = "none";
-          return;
-        }
-
-        // First file
-        const first = files[0];
-        document.querySelector('.file-name').innerText = first.name || "Unnamed file";
-        document.querySelector('.file-link').href = first.url;
-
-        // Remaining files
-        const grid = document.getElementById("file-grid");
-        for (let i = 1; i < files.length; i++) {
-          const file = files[i];
-          const item = document.createElement("div");
-          item.className = "grid-item";
-
-          item.innerHTML = `
-            <div class="file-number">#${i + 1}</div>
-            <div class="file-name">${file.name || "Unnamed file"}</div>
-            <a href="${file.url}" download><button>Download</button></a>
-          `;
-
-          grid.appendChild(item);
-        }
-      } catch (err) {
-        console.error(err);
-        document.querySelector('.file-name').innerText = "Error loading files.";
-      }
-    }
-
-    loadFiles();
-  </script>
 </body>
 </html>
