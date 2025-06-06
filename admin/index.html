@@ -7,6 +7,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <script>
+  const correctPassword = "lucasprint"; // Choose your own
+
+  if (!sessionStorage.getItem("adminLoggedIn")) {
+    const pass = prompt("Admin password:");
+    if (pass !== correctPassword) {
+      document.body.innerHTML = "<h2>Access denied.</h2>";
+      throw new Error("Access denied");
+    }
+    sessionStorage.setItem("adminLoggedIn", "true");
+  }
+</script>
   <div class="topbar">3dPrint4Lucas</div>
   <div class="admin-layout">
     <div id="first-file" class="highlight-box">
